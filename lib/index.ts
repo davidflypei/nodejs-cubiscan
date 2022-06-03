@@ -1,6 +1,5 @@
 import {CommandRegistry} from "./command";
 import * as net from "net";
-import {promises} from "dns";
 
 const EXCLUDED = ['start', 'end', 'cr', 'lf']
 
@@ -23,31 +22,24 @@ module.exports = class CubiScan {
 
   async make_request({command, param = ''}: {command: string, param?: string}): Promise<object> {
     return new Promise((resolve, reject) => {
-      console.log('sending command ' + command + ' ' + param)
       let command_string = this.registry.build_command_string({name: command, params: param});
-      console.log('command string: ' + command_string);
-      console.log("IP: " + this.ip_address + " Port: " + this.port);
       let socket = new net.Socket();
       socket.connect(this.port, this.ip_address);
       socket.on('connect',function() {
-        console.log("connected");
         socket.write(command_string);
-      });
-
-      socket.on('end', function() {
-        console.log('disconnected from server');
       });
 
       socket.on('data', (d) => {
         socket.end();
-        resolve(this.parse_response(command, d.toString()));
+        socket.on('close', () => {
+          resolve(this.parse_response(command, d.toString()));
+        });
       });
     });
   }
 
   parse_response(command: string, data: string): object {
     data = data.replace(/(b'0x00'$)/, '');
-    console.log('response: ' + data);
     let mappings = this.registry.get_response_for(command);
     let mapping = mappings[0];
     let neg_mapping = mappings[1];
@@ -62,8 +54,6 @@ module.exports = class CubiScan {
         try {
           key = used_map[index]['key'];
         } catch (e) {
-          console.log('Unexpected content in responce: ' + section.slice(index));
-          console.error('Error parsing response section ' + section + ' at index ' + index);
           break;
         }
         let length = used_map[index]['length'];
@@ -83,12 +73,82 @@ module.exports = class CubiScan {
         }
       }
     });
-    console.log('parsed response: ');
-    console.log(res_dict);
     return res_dict;
+  }
+
+  async continuousMeasure(): Promise<object> {
+    return this.make_request({command: "continuous_measure"});
+  }
+
+  async dimCalibration(): Promise<object> {
+    return this.make_request({command: "dim_calibration"});
+  }
+
+  async setDimUnit(unitP: string): Promise<object> {
+    switch (unitP.toLowerCase()) {
+      case 'cm':
+        unitP = 'M';
+        break;
+      case 'in':
+        unitP = 'E';
+        break;
+      case 'm':
+        unitP = 'M';
+        break;
+      case 'e':
+        unitP = 'E';
+        break;
+    }
+    return this.make_request({command:"dim_unit", param: unitP});
+  }
+
+  async setFactor(factorP: string): Promise<object> {
+    return this.make_request({command: "set_factor", param: factorP});
+  }
+
+  async setLocation(locationP: string): Promise<object> {
+    return this.make_request({command: "location", param: locationP});
   }
 
   async measure(): Promise<object> {
     return this.make_request({command: "measure"});
+  }
+
+  async scaleCalibration(weightP: string): Promise<object> {
+    return this.make_request({command: "weight_calibration", param: weightP});
+  }
+
+  async test(): Promise<object> {
+    return this.make_request({command: "test"});
+  }
+
+  async units(): Promise<object> {
+    return this.make_request({command: "units"});
+  }
+
+  async values(): Promise<object> {
+    return this.make_request({command: 'values'});
+  }
+
+  async setWeightUnit(unitP: string): Promise<object> {
+    switch (unitP.toLowerCase()) {
+      case 'kg':
+        unitP = 'M';
+        break;
+      case 'lb':
+        unitP = 'E';
+        break;
+      case 'm':
+        unitP = 'M';
+        break;
+      case 'e':
+        unitP = 'E';
+        break;
+    }
+    return this.make_request({command: "weight_unit", param: unitP});
+  }
+
+  async zero(): Promise<object> {
+    return this.make_request({command: "zero"});
   }
 }

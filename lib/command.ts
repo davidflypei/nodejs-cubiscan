@@ -13,7 +13,7 @@ export class CommandRegistry {
 
     init_base_mappings() {
         this.add_command(
-            'continous_measure', Buffer.from('C', 'ascii'),
+            'continuous_measure', Buffer.from('C', 'ascii'),
             base_responses.MEASURE, base_responses.NEG_MEASURE
         );
 
@@ -43,6 +43,9 @@ export class CommandRegistry {
         );
         this.add_command(
             'units', Buffer.from('U', 'ascii'), base_responses.REPORT_UNITS, []
+        );
+        this.add_command(
+            'values', Buffer.from('V', 'ascii'), base_responses.VALUES, []
         );
         this.add_command(
             'weight_unit', Buffer.from('#', 'ascii'), [], []

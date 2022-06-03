@@ -37,6 +37,34 @@ export class helpers {
         return [value_str == 'M', ''];
     }
 
+    static extract_dim_unit(value: string) {
+        let value_str = helpers.decode(value)[0];
+        switch (value_str) {
+            case 'E':
+                return ['in', ''];
+                break;
+            case 'M':
+                return ['cm', ''];
+                break;
+            default:
+                return ['unknown', ''];
+        }
+    }
+
+    static extract_weight_unit(value: string) {
+        let value_str = helpers.decode(value)[0];
+        switch (value_str) {
+            case 'E':
+                return ['lb', ''];
+                break;
+            case 'M':
+                return ['kg', ''];
+                break;
+            default:
+                return ['unknown', ''];
+        }
+    }
+
     static extract_factor(value: string) {
         let extraction = helpers.base_extract(value);
         return [extraction[0], ''];
