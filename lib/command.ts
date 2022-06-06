@@ -2,60 +2,63 @@ import {base_responses, BaseResponseMap} from "./base_responses";
 
 export class CommandRegistry {
     command_bits: { [key: string]: string };
+    response_bits: { [key: string]: string };
     response_mappings: {[key: string]: (BaseResponseMap[][] | [])};
 
     constructor() {
         this.command_bits = {};
+        this.response_bits = {};
         this.response_mappings = {};
         this.init_base_mappings();
     }
 
     init_base_mappings() {
         this.add_command(
-            'continuous_measure', 'C',
+            'continuous_measure', 'C', 'M',
             base_responses.MEASURE, base_responses.NEG_MEASURE
         );
 
         this.add_command(
-            'dim_calibration', 'D',
+            'dim_calibration', 'D', 'D',
             base_responses.DIM_CALIBRATION, []
         );
         this.add_command(
-            'dim_unit', '"', [], []
+            'dim_unit', '"', '"', [], []
         );
         this.add_command(
-            'set_factor', 'F', [], []
+            'set_factor', 'F', 'F', [], []
         );
         this.add_command(
-            'location', 'L', [], []
+            'location', 'L', 'L', [], []
         );
         this.add_command(
-            'measure', 'M',
+            'measure', 'M', 'M',
             base_responses.MEASURE, base_responses.NEG_MEASURE
         );
         this.add_command(
-            'weight_calibration', 'S',
+            'weight_calibration', 'S', 'S',
                 base_responses.WEIGHT_CALIBRATION, []
         );
         this.add_command(
-            'test', 'T', base_responses.TEST, []
+            'test', 'T', 'T', base_responses.TEST, []
         );
         this.add_command(
-            'units', 'U', base_responses.REPORT_UNITS, []
+            'units', 'U', 'U', base_responses.REPORT_UNITS, []
         );
         this.add_command(
-            'values', 'V', base_responses.VALUES, []
+            'values', 'V', 'V', base_responses.VALUES, []
         );
         this.add_command(
-            'weight_unit', '#', [], []
+            'weight_unit', '#', '#', [], []
         );
         this.add_command(
-            'zero', 'Z', [], []
+            'zero', 'Z', 'Z', [], []
         );
     }
 
-    add_command(name: string, command_bit: string, response: (BaseResponseMap[] | []), neg_response: BaseResponseMap[] | []): void {
+    add_command(name: string, command_bit: string, response_bit: string, response: (BaseResponseMap[] | []), neg_response: BaseResponseMap[] | []): void {
         this.command_bits[name] = command_bit;
+        this.response_bits[name] = response_bit;
         this.response_mappings[name] = [response, neg_response];
     }
 

@@ -53,32 +53,32 @@ export class base_responses {
     ];
 
     static VALUES: BaseResponseMap[] = [
-        {'key': 'length_1_dbw', 'length': 4, 'converter': helpers.decode},
-        {'key': 'length_2_dbw', 'length': 4, 'converter': helpers.decode},
-        {'key': 'width_dbw', 'length': 4, 'converter': helpers.decode},
-        {'key': 'height_dbw', 'length': 4, 'converter': helpers.decode},
-        {'key': 'length_1_cpi', 'length': 4, 'converter': helpers.decode},
-        {'key': 'length_2_cpi', 'length': 4, 'converter': helpers.decode},
-        {'key': 'width_cpi', 'length': 4, 'converter': helpers.decode},
-        {'key': 'height_cpi', 'length': 4, 'converter': helpers.decode},
-        {'key': 'length_1_blanking', 'length': 4, 'converter': helpers.decode},
-        {'key': 'length_2_blanking', 'length': 4, 'converter': helpers.decode},
-        {'key': 'width_blanking', 'length': 4, 'converter': helpers.decode},
-        {'key': 'height_blanking', 'length': 4, 'converter': helpers.decode},
-        {'key': 'length_1_gain', 'length': 4, 'converter': helpers.decode},
-        {'key': 'length_2_gain', 'length': 4, 'converter': helpers.decode},
-        {'key': 'width_gain', 'length': 4, 'converter': helpers.decode},
-        {'key': 'height_gain', 'length': 4, 'converter': helpers.decode},
-        {'key': 'length_1_pulses', 'length': 2, 'converter': helpers.decode},
-        {'key': 'length_2_pulses', 'length': 2, 'converter': helpers.decode},
-        {'key': 'width_pulses', 'length': 2, 'converter': helpers.decode},
-        {'key': 'height_pulses', 'length': 2, 'converter': helpers.decode},
-        {'key': 'length_1_wait_time', 'length': 3, 'converter': helpers.decode},
-        {'key': 'length_2_wait_time', 'length': 3, 'converter': helpers.decode},
-        {'key': 'width_wait_time', 'length': 3, 'converter': helpers.decode},
-        {'key': 'height_wait_time', 'length': 3, 'converter': helpers.decode},
+        {'key': 'length_1_dbw', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'length_2_dbw', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'width_dbw', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'height_dbw', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'length_1_cpi', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'length_2_cpi', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'width_cpi', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'height_cpi', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'length_1_blanking', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'length_2_blanking', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'width_blanking', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'height_blanking', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'length_1_gain', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'length_2_gain', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'width_gain', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'height_gain', 'length': 4, 'converter': helpers.extract_number},
+        {'key': 'length_1_pulses', 'length': 2, 'converter': helpers.extract_number},
+        {'key': 'length_2_pulses', 'length': 2, 'converter': helpers.extract_number},
+        {'key': 'width_pulses', 'length': 2, 'converter': helpers.extract_number},
+        {'key': 'height_pulses', 'length': 2, 'converter': helpers.extract_number},
+        {'key': 'length_1_wait_time', 'length': 3, 'converter': helpers.extract_number},
+        {'key': 'length_2_wait_time', 'length': 3, 'converter': helpers.extract_number},
+        {'key': 'width_wait_time', 'length': 3, 'converter': helpers.extract_number},
+        {'key': 'height_wait_time', 'length': 3, 'converter': helpers.extract_number},
         {'key': 'model_number', 'length': 4, 'converter': helpers.decode},
-        {'key': 'scale_capacity', 'length': 3, 'converter': helpers.decode},
+        {'key': 'scale_capacity', 'length': 3, 'converter': helpers.extract_number},
         {'key': 'firmware_version', 'length': 5, 'converter': helpers.decode},
     ];
 }
@@ -110,31 +110,31 @@ export interface BaseResponse {
     factor?: number;
     intl_unit?: boolean;
     identifier?: string;
-    length_1_dbw?: string;
-    length_2_dbw?: string;
-    width_dbw?: string;
-    height_dbw?: string;
-    length_1_cpi?: string;
-    length_2_cpi?: string;
-    width_cpi?: string;
-    height_cpi?: string;
-    length_1_blanking?: string;
-    length_2_blanking?: string;
-    width_blanking?: string;
-    height_blanking?: string;
-    length_1_gain?: string;
-    length_2_gain?: string;
-    width_gain?: string;
-    height_gain?: string;
-    length_1_pulses?: string;
-    length_2_pulses?: string;
-    width_pulses?: string;
-    height_pulses?: string;
-    length_1_wait_time?: string;
-    length_2_wait_time?: string;
-    width_wait_time?: string;
-    height_wait_time?: string;
+    length_1_dbw?: number;
+    length_2_dbw?: number;
+    width_dbw?: number;
+    height_dbw?: number;
+    length_1_cpi?: number;
+    length_2_cpi?: number;
+    width_cpi?: number;
+    height_cpi?: number;
+    length_1_blanking?: number;
+    length_2_blanking?: number;
+    width_blanking?: number;
+    height_blanking?: number;
+    length_1_gain?: number;
+    length_2_gain?: number;
+    width_gain?: number;
+    height_gain?: number;
+    length_1_pulses?: number;
+    length_2_pulses?: number;
+    width_pulses?: number;
+    height_pulses?: number;
+    length_1_wait_time?: number;
+    length_2_wait_time?: number;
+    width_wait_time?: number;
+    height_wait_time?: number;
     model_number?: string;
-    scale_capacity?: string;
+    scale_capacity?: number;
     firmware_version?: string;
 }

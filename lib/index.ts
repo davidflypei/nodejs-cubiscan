@@ -26,7 +26,7 @@ export class CubiScan {
       this.socket.write(command_string);
       this.socket.on('data', (d) => {
         let response = this.parse_response(command, d.toString());
-        if (response.command === this.registry.command_bits[command]){
+        if (response.command === this.registry.response_bits[command]){
           resolve(response);
         }
       });
@@ -41,7 +41,7 @@ export class CubiScan {
     let used_map = mapping;
     let index = 0;
     let res_dict: BaseResponse = {};
-    let sections = data.split(Buffer.from(',', 'ascii').toString('binary'));
+    let sections = data.split(',');
     sections.forEach(section => {
       let start = 0;
       while (start < section.length) {
@@ -60,7 +60,7 @@ export class CubiScan {
         }
         let end = (start + length);
         let value = section.slice(start, end);
-        res_dict[key] = converter(value)[0];
+        res_dict[key] = (converter ? converter(value)[0] : value);
         start = end;
         index += 1;
         if (key == 'acknowledge' && !res_dict[key]) {

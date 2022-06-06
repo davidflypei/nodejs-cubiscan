@@ -66,6 +66,11 @@ export class helpers {
         return [Number(extraction[0]), ''];
     }
 
+    static extract_number(value: string): [number, string] {
+        let extraction = helpers.decode(value);
+        return [Number(extraction[0]), ''];
+    }
+
     static dom_intl_to_bool(value: string): [boolean, string] {
         let extraction = helpers.decode(value);
         return [extraction[0] == 'I', ''];
