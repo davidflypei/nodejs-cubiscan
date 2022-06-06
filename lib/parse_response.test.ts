@@ -1,6 +1,5 @@
 import {CubiScan} from "./index";
 import * as net from "net";
-import exp = require("constants");
 
 describe("Parsing Responses", () => {
     let cubiscan: CubiScan;
