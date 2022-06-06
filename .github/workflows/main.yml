@@ -28,7 +28,9 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 12
-      - run: npm test
+      - run: npm install
+      - name: Run tests
+        run: npm test
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
