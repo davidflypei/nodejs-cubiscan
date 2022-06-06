@@ -24,10 +24,11 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      - name: Setup Node 
-        uses: escemi-tech/actions-node@v1.8.0
+      - name: Setup Node
+        uses: actions/setup-node@v3
         with:
-          package-manager: npm
+          node-version: 12
+        run: npm test
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
         with:
