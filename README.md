@@ -31,6 +31,7 @@ let cubiscan = new CubiScan({ip_address: '192.168.0.20', port: 49000});
 
 cubiscan.measure().then(data => {
   console.log(data);
+  cubiscan.endSocket();
 });
 ```
 
