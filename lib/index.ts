@@ -9,16 +9,12 @@ export class CubiScan {
   port: number;
   timeout: number;
   registry: any;
-  buffer_recv_size: number;
-  ssl: boolean;
   socket: net.Socket;
 
-  constructor({ip_address, port, timeout=30, ssl=false, buffer_recv_size=1024}: {ip_address: string, port: number, timeout?: number, ssl?: boolean, buffer_recv_size?: number}) {
+  constructor({ip_address, port, timeout=30}: {ip_address: string, port: number, timeout?: number}) {
     this.ip_address = ip_address;
     this.port = port;
     this.timeout = timeout;
-    this.buffer_recv_size = buffer_recv_size;
-    this.ssl = ssl;
     this.registry = new CommandRegistry();
     this.socket = new net.Socket();
     this.socket.connect(this.port, this.ip_address);
@@ -64,7 +60,7 @@ export class CubiScan {
         }
         let end = (start + length);
         let value = section.slice(start, end);
-        res_dict[key] = (converter ? converter(value)[0] : value);
+        res_dict[key] = converter(value)[0];
         start = end;
         index += 1;
         if (key == 'acknowledge' && !res_dict[key]) {

@@ -1,31 +1,27 @@
 import {CubiScan} from "./index";
-import {Server, Socket} from "socket.io";
-import {createServer} from "http";
-import * as http from "http";
+import * as net from "net";
 
 describe("Parsing Responses", () => {
-    var cubiscan: CubiScan;
-    let io: Server;
-    let serverSocket: Socket;
+    let cubiscan: CubiScan;
+    let socketServer: net.Server;
+    let socket: net.Socket
 
     beforeAll((done) => {
-        const httpServer: http.Server = createServer();
-        io = new Server(httpServer);
-        httpServer.listen(() => {
-            const address = httpServer.address();
-            io.on("connection", (socket: Socket) => {
-                serverSocket = socket;
-            });
+         socketServer = net.createServer((newsocket) => {
+            socket = newsocket;
+        });
 
+        socketServer.listen(() => {
+            const address = socketServer.address();
             //@ts-ignore
-            cubiscan = new CubiScan({ip_address: address.address, port: address.port});
+            cubiscan = new CubiScan({ip_address: address.address, port: address.port, timeout: 30});
             cubiscan.socket.on('connect', done);
         });
     });
 
     afterAll(() => {
-        io.close();
         cubiscan.endSocket();
+        socket.end();
     });
 
     test('Parse positive measure response', () => {
@@ -64,5 +60,15 @@ describe("Parsing Responses", () => {
         let response = cubiscan.parse_response('set_factor', '\x02FN\x03\x0D\x0A');
         expect(response.command).toEqual('F');
         expect(response.acknowledge).toEqual(false);
+    });
+
+    test('Testing', (done) => {
+        socket.on('data', (data) => {
+            socket.write('\x02MAC004600,L020.0,W010.0,H030.0,M,K500.50,D510.50,M,F0010,I\x03\x0D\x0A');
+        });
+        cubiscan.measure().then((data) => {
+            expect(data.command).toEqual('M');
+            done();
+        });
     });
 });

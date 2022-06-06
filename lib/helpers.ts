@@ -42,10 +42,8 @@ export class helpers {
         switch (value_str) {
             case 'E':
                 return ['in', ''];
-                break;
             case 'M':
                 return ['cm', ''];
-                break;
             default:
                 return ['unknown', 'Unknown Unit'];
         }
@@ -56,10 +54,8 @@ export class helpers {
         switch (value_str) {
             case 'E':
                 return ['lb', ''];
-                break;
             case 'M':
                 return ['kg', ''];
-                break;
             default:
                 return ['unknown', 'Unknown Unit'];
         }
@@ -80,13 +76,10 @@ export class helpers {
         switch (value_str){
             case 'C':
                 return ['corner_sensor', ''];
-                break;
             case 'M':
                 return ['measure_error', ''];
-                break;
             case 'Z':
                 return ['zeroing_error', ''];
-                break;
             default:
                 return ['unknown', 'Unknown Error'];
         }
