@@ -1,21 +1,21 @@
 export class helpers {
-    static decode(value: string): string[] {
-        return [Buffer.from(value, 'ascii').toString('binary'), ''];
+    static decode(value: string): [string, string] {
+        return [Buffer.from(value, 'ascii').toString(), ''];
     }
 
-    static extract_measure(value: string) {
+    static extract_measure(value: string): [number, string] {
         let extraction = helpers.base_extract(value);
         let value_str = extraction[0];
         let error = extraction[1];
-        return [value_str, error];
+        return [Number(value_str), error];
     }
 
-    static base_extract(value: string): string[] {
+    static base_extract(value: string): [string, string] {
         let acc_value = value.slice(1);
         let error = '';
         let value_str = helpers.decode(acc_value)[0];
         value_str = value_str.trim();
-        let first_char = value_str.slice(0,1);
+        let first_char = value_str.slice(0,1).toString();
 
         if (isNaN(Number(first_char))) {
             if (first_char == '_') {
@@ -32,12 +32,12 @@ export class helpers {
         return [value_str, error];
     }
 
-    static dim_to_bool(value: string) {
+    static dim_to_bool(value: string): [boolean, string] {
         let value_str = helpers.decode(value)[0];
         return [value_str == 'M', ''];
     }
 
-    static extract_dim_unit(value: string) {
+    static extract_dim_unit(value: string): [string, string] {
         let value_str = helpers.decode(value)[0];
         switch (value_str) {
             case 'E':
@@ -47,11 +47,11 @@ export class helpers {
                 return ['cm', ''];
                 break;
             default:
-                return ['unknown', ''];
+                return ['unknown', 'Unknown Unit'];
         }
     }
 
-    static extract_weight_unit(value: string) {
+    static extract_weight_unit(value: string): [string, string] {
         let value_str = helpers.decode(value)[0];
         switch (value_str) {
             case 'E':
@@ -61,21 +61,21 @@ export class helpers {
                 return ['kg', ''];
                 break;
             default:
-                return ['unknown', ''];
+                return ['unknown', 'Unknown Unit'];
         }
     }
 
-    static extract_factor(value: string) {
+    static extract_factor(value: string): [number, string] {
         let extraction = helpers.base_extract(value);
-        return [extraction[0], ''];
+        return [Number(extraction[0]), ''];
     }
 
-    static dom_intl_to_bool(value: string) {
+    static dom_intl_to_bool(value: string): [boolean, string] {
         let extraction = helpers.decode(value);
         return [extraction[0] == 'I', ''];
     }
 
-    static get_error(value: string) {
+    static get_error(value: string): [string, string] {
         let value_str = helpers.decode(value)[0];
         switch (value_str){
             case 'C':
@@ -88,11 +88,11 @@ export class helpers {
                 return ['zeroing_error', ''];
                 break;
             default:
-                return ['unknown', ''];
+                return ['unknown', 'Unknown Error'];
         }
     }
 
-    static ack_to_bool(value: string) {
+    static ack_to_bool(value: string): [boolean, string] {
         let extraction = helpers.decode(value);
         return [extraction[0] == 'A', ''];
     }
