@@ -28,15 +28,12 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 12
-      - run: npm install
+      - name: Install dependencies
+        run: npm install
       - name: Run tests
         run: npm test
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v2
-        with:
-          directory: ./coverage/reports/
-          files: ./coverage/coverage-summary.json
-          path_to_write_report: ./coverage/codecov_report.txt
             
 
     
