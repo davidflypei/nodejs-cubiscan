@@ -21,7 +21,7 @@ describe("Parsing Responses", () => {
 
     afterAll(() => {
         cubiscan.endSocket();
-        socket.end();
+        socketServer.close();
     });
 
     test('Parse positive measure response', () => {

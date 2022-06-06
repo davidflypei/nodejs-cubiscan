@@ -1,4 +1,6 @@
 # nodejs-cubiscan
+[![codecov](https://codecov.io/gh/davidflypei/nodejs-cubiscan/branch/main/graph/badge.svg?token=WS5X4P29ZZ)](https://codecov.io/gh/davidflypei/nodejs-cubiscan)
+![example workflow](https://github.com/davidflypei/nodejs-cubiscan/actions/workflows/main.yml/badge.svg)
 
 This module allows you to connect and interface to a Cubiscan ([https://cubiscan.com/](https://cubiscan.com/)) device over the network. It's still a bit of a work in progress, but the main commands work. Feel free to make/recommend improvements where possible.
 
