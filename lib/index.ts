@@ -40,12 +40,12 @@ export class CubiScan {
     let neg_mapping = mappings[1];
     let used_map = mapping;
     let index = 0;
-    let res_dict: BaseResponse = {};
+    let res_dict = <BaseResponse>{};
     let sections = data.split(',');
     sections.forEach(section => {
       let start = 0;
       while (start < section.length) {
-        let key: BaseResponseMap['key'];
+        let key: BaseResponse['key'];
         try {
           key = used_map[index]['key'];
         } catch (e) {

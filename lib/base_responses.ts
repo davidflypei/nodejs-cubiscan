@@ -90,7 +90,7 @@ export interface BaseResponseMap {
 }
 
 export interface BaseResponse {
-    [key: string]: string | boolean | number | undefined;
+    [key: string]: any;
     start?: string;
     command?: string;
     acknowledge?: boolean;
@@ -137,4 +137,4 @@ export interface BaseResponse {
     model_number?: string;
     scale_capacity?: number;
     firmware_version?: string;
-}
+};
